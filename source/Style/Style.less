@@ -1,0 +1,109 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:100,400|Quicksand);
+// the primary colors for the app
+@primary-light: #97E0FF;
+@primary: #00B2FF;
+@dark: #0079AD;
+@dark-highlight: #2D97C5;
+@light-highlight: #54CBFF;
+// the goal here is light text on monochromatic background colors
+// with the only non-monochromatic color being the header
+body {
+	color: #fff;
+	font-family: 'Lato', sans-serif;
+}
+// the header and header contents
+.header {
+	background: #fff;
+	color: #222;
+	padding: 20px;
+	font-family: 'Quicksand', sans-serif;
+	.week { color: @primary; font-size: 2.3em; font-weight: bold; }
+	.week, .counter { display: inline-block; }
+}
+// the section header with the date
+.game-day {
+	.date {
+		padding: 10px;
+		font-size: 1.1em;
+		color: @light-highlight;
+		margin: 1px 0;
+		box-sizing: border-box;
+	}
+}
+// each game entry should be the width of the device,
+// in this example application we don't target every device
+// individually
+.games {
+	.game {
+		width: 320px;
+		padding: 10px;
+		display: inline-block;
+		vertical-align: top;
+		margin: 1px;
+		box-sizing: border-box;
+		// here we set the various classes so all we do is add
+		// the correct class in the javascript on generation
+		&.primary {
+			background: @primary;
+		}
+		&.primary-light {
+			background: @primary-light;
+		}
+		&.light-highlight {
+			background: @light-highlight;
+		}
+		&.dark {
+			background: @dark;
+		}
+		&.dark-highlight {
+			background: @dark-highlight;
+		}
+	}
+}
+.game {
+	.teams-table {
+		width: 100%;
+		.teams {
+			.awayItems, .homeItems {
+				display: table;
+				width: 100%;
+			}
+			.team, .score {
+				display: table-cell;
+				font-size: 20px;
+				line-height: 20px;
+				height: 20px;
+			}
+			.team {
+				width: 100%;
+			}
+			.score {
+				text-align: right;
+			}
+			// to simply indicate the winner in a game that is over
+			// we use this, unfortunately this will only work in current
+			// browsers and is not an example of platform independence
+			.winner {
+				.team:before {
+					content: '> ';
+				}
+			}
+		}
+	}
+	// these items are simply accessories as they aren't
+	// really key to the example but just give it a few more
+	// examples of minor bindings that can be done easily
+	.location {
+		font-size: .7em;
+		width: 276px;
+		white-space: nowrap;
+		overflow: hidden;
+		padding-top: 5px;
+		text-overflow: ellipsis;
+		box-sizing: border-box;
+	}
+	.start-time {
+		font-size: .6em;
+		box-sizing: border-box;
+	}
+}
