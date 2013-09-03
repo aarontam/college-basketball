@@ -7,13 +7,8 @@ enyo.kind({
 			{classes: "week", bindings: [
 				{from: ".app.week", to: ".content", transform: "weekTransform"}
 			]},
-			{name: "counter", allowHtml: true, classes: "counter", bindings: [
-				{from: ".app.ticker", to: ".content", transform: "tickerTransform"}
-			]},
 			{components: [
-				{kind: enyo.Button, ontap: "toggleTicker", bindings: [
-					{from: ".app.tick", to: ".content", transform: "refreshTransform"}
-				]}
+				{kind: enyo.Button, ontap: "refresh", content: "refresh"}
 			]}
 		]},
 		{kind: enyo.DataRepeater, classes: "college-football", components: [
@@ -28,17 +23,10 @@ enyo.kind({
 			]}
 		], controller: ".app.controllers.scoreboard"}
 	],
-	toggleTicker: function () {
-		this.app.toggleTicker();
+	refresh: function () {
+		this.app.update();
 	},
 	weekTransform: function (v) {
 		return "WEEK " + v;
-	},
-	tickerTransform: function (v, d, b) {
-		return "&nbsp;... " + ((!isNaN(v) && v) || (this.app.didLoad? "paused": "loading"));
-	},
-	refreshTransform: function (v) {
-		if (v != null) { return "Stop Refreshing"; }
-		else { return "Start Refreshing"; }
 	}
 });
