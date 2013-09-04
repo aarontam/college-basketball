@@ -1,5 +1,4 @@
 enyo.depends(
-	"$lib/layout",
 	"Models",
 	"Style",
 	"Views",
