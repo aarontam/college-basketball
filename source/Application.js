@@ -1,9 +1,9 @@
 enyo.kind({
-	name: "cb.Application",
+	name: "Application",
 	kind: enyo.Application,
-	view: cb.MainView,
+	view: Main,
 	controllers: [
-		{name: "scoreboard", kind: cb.Scoreboard}
+		{name: "scoreboard", kind: Scoreboard}
 	],
 	update: function () {
 		this.controllers.scoreboard.fetch({success: this.startTicker, strategy: "merge"});

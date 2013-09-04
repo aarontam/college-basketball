@@ -1,4 +1,4 @@
 enyo.depends(
-	"Game.js",
-	"Main.js"
+	"Main.js",
+	"Team.js"
 );

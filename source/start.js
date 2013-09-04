@@ -1,3 +1,3 @@
 enyo.ready(function () {
-	new cb.Application({name: "app"});
+	new Application({name: "app"});
 });

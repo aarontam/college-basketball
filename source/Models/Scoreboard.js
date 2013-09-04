@@ -1,7 +1,7 @@
 enyo.kind({
-	name: "cb.Scoreboard",
+	name: "Scoreboard",
 	kind: enyo.Collection,
-	model: cb.GameDay,
+	model: GameDay,
 	defaultSource: "jsonp",
 	url: "http://data.ncaa.com/jsonp/scoreboard/football/fbs/2013/%./scoreboard.html",
 	getUrl: function () {

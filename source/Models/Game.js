@@ -1,36 +1,21 @@
 enyo.kind({
-	name: "cb.Game",
+	name: "Game",
 	kind: enyo.Model,
 	readOnly: true,
-	attributes: {
-		homeTeam: function () {
-			var r = this.get("homeRank");
-			if (r) { r = enyo.format("(%.) ", r); }
-			else { r = ""; }
-			return r + this.get("home").nameRaw;
-		},
-		homeRank: function () {
-			return parseInt(this.get("home").teamRank);
-		},
-		homeScore: function () {
-			return this.get("home").currentScore;
-		},
-		awayTeam: function () {
-			var r = this.get("awayRank");
-			if (r) { r = enyo.format("(%.) ", r); }
-			else { r = ""; }
-			return r + this.get("away").nameRaw;
-		},
-		awayRank: function () {
-			return parseInt(this.get("away").teamRank);
-		},
-		awayScore: function () {
-			return this.get("away").currentScore;
-		},
-		winner: function () {
-			if (this.get("gameState") == "final") {
-				return this.get("home").winner == "true"? "home": "away";
-			}
+	parse: function (data) {
+		var h = this.get("home"),
+			a = this.get("away");
+		if (!h) {
+			data.home = new School(data.home);
+			data.away = new School(data.away);
+		} else {
+			h.setObject(data.home);
+			a.setObject(data.away);
+			// remove these entries from the dataset so
+			// they won't override our current objects
+			delete data.home;
+			delete data.away;
 		}
+		return data;
 	}
 });

@@ -1,5 +1,5 @@
 enyo.kind({
-	name: "cb.GameDay",
+	name: "GameDay",
 	kind: enyo.Model,
 	mergeKeys: ["day"],
 	readOnly: true,
@@ -7,7 +7,7 @@ enyo.kind({
 		// convert the array of games data hashes into a collection
 		// of game records
 		if (!this.get("games")) {
-			data.games = new enyo.Collection(data.games, {model: cb.Game, owner: this});
+			data.games = new enyo.Collection(data.games, {model: Game, owner: this});
 		} else {
 			// if this is one of the updates we don't need to replace the entire
 			// collection we simply need to merge the new data in
