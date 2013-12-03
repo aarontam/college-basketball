@@ -16,7 +16,21 @@ enyo.kind({
 			], bindings: [
 				{from: ".model.location", to: ".$.location.content"},
 				{from: ".model.top", to: ".$.topTeam.model"},
-				{from: ".model.bottom", to: ".$.bottomTeam.model"}
+				{from: ".model.bottom", to: ".$.bottomTeam.model"},
+				{from: ".model.round", to:".style", transform: function(v, dir, binding) {
+					var topIndex,
+						index = binding.target.index
+						round = parseInt(v)-2;
+					if (index == 63) topIndex = 0;
+					else if (index >= 62) topIndex = index - 62;
+					else if (index >= 60) topIndex = index - 60;
+					else if (index >= 56) topIndex = index - 56;
+					else if (index >= 48) topIndex = index - 48;
+					else if (index >= 32) topIndex = index - 32;
+					else topIndex = index;
+					//return "position: absolute; top:" + (topIndex*66 + (round * (topIndex+1) * (round+1)*33)) + "px; left:" + round*250 + "px"; }
+					return "position: absolute; top:" + (33*(Math.pow(2, round)-1) + (topIndex*66*Math.pow(2, round))) + "px; left:" + round*246 + "px"; }
+				}
 			]}
 		], controller: ".app.controllers.bracket"},
 		{name: "popup", kind: enyo.Popup, modal: true, floating: true, centered: true, components: [
