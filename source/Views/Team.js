@@ -3,18 +3,22 @@ enyo.kind({
 	classes: "team",
 	orientation: "home",
 	components: [
-		{name: "score", classes: "team-score"},
-		{name: "logo", classes: "logo", kind: enyo.Image},
-		{name: "teamName", classes: "team-name"},
-		{classes: "banner", content: "winner"}
+		{name: "teamInfo", classes: "team-info", components: [
+			{name: "logo", classes: "logo", kind: enyo.Image},
+			{name: "seed", classes: "seed"},
+			{name: "teamName", classes: "name"}
+		]},
+		{name: "score", classes: "team-score"}
 	],
 	bindings: [
 		// binding from a computed property...
 		{from: ".model.logo", to: ".$.logo.src"},
-		{from: ".model.currentScore", to: ".$.score.content"},
+		{from: ".model.score", to: ".$.score.content"},
+		{from: ".model.seed", to: ".$.seed.content"},
 		// binding from a computed property...
 		{from: ".model.won", to: ".winner"},
-		{from: ".model.nameRaw", to: ".$.teamName.content"}
+		// binding from a computed property...
+		{from: ".model.name", to: ".$.teamName.content"}
 	],
 	// when the computed property for `won`, bound to our local property
 	// `winner` is set, this method will detect the change and fire which

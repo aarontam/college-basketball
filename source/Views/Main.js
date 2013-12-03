@@ -2,40 +2,32 @@ enyo.kind({
 	name: "Main",
 	kind: enyo.Scroller,
 	fit: true,
-	classes: "college-football",
+	classes: "college-basketball",
 	components: [
-		{classes: "game-week", components: [
-			{tag: "span", content: "NCAAF Week "},
-			{tag: "span", name: "week"}	
-		]},
-		{kind: enyo.DataRepeater, components: [
-			{classes: "game-day", components: [
-				{classes: "date", components: [
-					{name: "date"}
+		{name: "games", classes: "games", kind: enyo.DataRepeater, ontap: "gameSelected", components: [
+			{classes: "game", components: [
+				{classes: "top", components: [
+					{name: "topTeam", classes: "top-team", kind: "Team"}
 				]},
-				{name: "games", classes: "games", kind: enyo.DataRepeater, components: [
-					{classes: "game", components: [
-						{classes: "game-teams", components: [
-							{name: "away", classes: "away-team", kind: "Team", orientation: "away"},
-							{content: "@", classes: "at"},
-							{name: "home", classes: "home-team", kind: "Team", orientation: "home"}
-						]},
-						{name: "location", classes: "game-location"}
-					], bindings: [
-						{from: ".model.home", to: ".$.home.model"},
-						{from: ".model.away", to: ".$.away.model"},
-						{from: ".model.location", to: ".$.location.content"}
-					]}
-				]}
+				{classes: "bottom", components: [
+					{name: "bottomTeam", classes: "bottom-team", kind: "Team"}
+				]},
+				{name: "location", classes: "game-location"}
 			], bindings: [
-				// we map an entry from our model to the controller of our nested
-				// repeater
-				{from: ".model.games", to: ".$.games.controller"},
-				{from: ".model.day", to: ".$.date.content"}
-			]}	
-		], controller: ".app.controllers.scoreboard"}
+				{from: ".model.location", to: ".$.location.content"},
+				{from: ".model.top", to: ".$.topTeam.model"},
+				{from: ".model.bottom", to: ".$.bottomTeam.model"}
+			]}
+		], controller: ".app.controllers.bracket"},
+		{name: "popup", kind: enyo.Popup, modal: true, floating: true, centered: true, components: [
+			{name: "iframe", tag: "iframe", classes: "enyo-fill", style: "border: none;"}
+		]}
 	],
-	bindings: [
-		{from: ".app.week", to: ".$.week.content"}
-	]
+	gameSelected: function (inSender, inEvent) {
+		enyo.log(inEvent);
+		if (typeof inEvent.index !== 'undefined') {
+			this.$.iframe.setSrc("http://www.ncaa.com/game/basketball-men/d1/2013/03/19/nc-at-liberty#recap");
+			this.$.popup.showAtPosition({left: inEvent.clientX, top: inEvent.clientY});
+		}
+	}
 });

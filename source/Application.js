@@ -3,7 +3,7 @@ enyo.kind({
 	kind: enyo.Application,
 	view: Main,
 	controllers: [
-		{name: "scoreboard", kind: Scoreboard}
+		{name: "bracket", kind: Bracket}
 	],
 	// in this method all we're doing is calling fetch with the `merge` strategy indicated
 	// of course this app doesn't currently supply an interactive UI button or timer to
@@ -11,7 +11,7 @@ enyo.kind({
 	// it didn't need to rebuild the entire application UI it could just update any fields
 	// that changed
 	update: function () {
-		this.controllers.scoreboard.fetch({success: this.startTicker, strategy: "merge"});
+		this.controllers.bracket.fetch({success: this.startTicker, strategy: "merge"});
 	},
 	// we create a computed property (see the `computed` block at the bottom) that will
 	// return the current week relative to the beginning of the college football season

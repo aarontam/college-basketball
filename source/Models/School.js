@@ -14,6 +14,11 @@ enyo.kind({
 		// for the team logo image
 		logo: function () {
 			return "http://i2.turner.ncaa.com/dr/ncaa/ncaa/release" + this.get("iconURL");
+		},
+		// we create a computed property that will map the internal _names.short_ attribute
+		// to the _name_ attribute
+		name: function() {
+			return this.get("names").short;
 		}
 	}
 });
