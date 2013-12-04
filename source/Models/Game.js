@@ -11,7 +11,7 @@ enyo.kind({
 			top,
 			bottom;
 
-		if (data.home.isTop) {
+		if (data.home.isTop === "T") {
 			top = data.home;
 			bottom = data.away;
 		} else {

@@ -4,6 +4,9 @@ enyo.kind({
 	fit: true,
 	classes: "college-basketball",
 	components: [
+		{classes: "onyx-toolbar-inline", components: [
+			{name: "yearPicker", kind: "onyx.DatePicker", dayHidden: true, monthHidden: true, maxYear: 2012, minYear: 2011, value: new Date("2012-12-31")}
+		]},
 		{name: "games", classes: "games", kind: enyo.DataRepeater, ontap: "gameSelected", components: [
 			{classes: "game", components: [
 				{classes: "top", components: [
@@ -28,7 +31,6 @@ enyo.kind({
 					else if (index >= 48) topIndex = index - 48;
 					else if (index >= 32) topIndex = index - 32;
 					else topIndex = index;
-					//return "position: absolute; top:" + (topIndex*66 + (round * (topIndex+1) * (round+1)*33)) + "px; left:" + round*250 + "px"; }
 					return "position: absolute; top:" + (33*(Math.pow(2, round)-1) + (topIndex*66*Math.pow(2, round))) + "px; left:" + round*246 + "px"; }
 				}
 			]}
@@ -36,6 +38,9 @@ enyo.kind({
 		{name: "popup", kind: enyo.Popup, modal: true, floating: true, centered: true, components: [
 			{name: "iframe", tag: "iframe", classes: "enyo-fill", style: "border: none;"}
 		]}
+	],
+	bindings: [
+		{from: ".$.yearPicker.value", to: ".app.yearDate"}
 	],
 	gameSelected: function (inSender, inEvent) {
 		enyo.log(inEvent);
