@@ -14,12 +14,18 @@ enyo.kind({
 	// it didn't need to rebuild the entire application UI it could just update any fields
 	// that changed
 	update: function () {
-		this.controllers.bracket.fetch({success: this.startTicker, strategy: "merge", replace: true});
+		var me = this;
+		if (this.view.startLoading) this.view.startLoading();
+		this.controllers.bracket.fetch({success: function() { 
+			if (me.view.stopLoading) {
+				me.view.stopLoading();
+			}
+		}, strategy: "merge", replace: true});
 	},
 	year: function () {
 		return this.yearDate.getFullYear();
 	},
-	yearDateChanged: function(inOldValue) {
+	yearDateChanged: function (inOldValue) {
 		this.update();
 	},
 	// we overloaded the default `start` method to also call our `update` method
