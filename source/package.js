@@ -6,6 +6,7 @@ enyo.depends(
 	"Models",
 	"Style",
 	"Views",
+	"Router.js",
 	"Application.js",
 	"start.js"
 );

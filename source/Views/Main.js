@@ -4,14 +4,16 @@ enyo.kind({
 	fit: true,
 	classes: "college-basketball",
 	components: [
+		{kind: "Signals", onLoadingStart: "spinnerStart"},
+		{kind: "Signals", onLoadingStop: "spinnerStop"},
 		{classes: "onyx-toolbar-inline", components: [
-			{name: "yearPicker", kind: "onyx.DatePicker", dayHidden: true, monthHidden: true, maxYear: 2012, minYear: 2011, value: new Date("2012-12-31")},
-			{name: "buttonBracket", kind: "onyx.Button", content: "Return to Bracket", ontap: "buttonBracketTapped", showing: false}
+			{name: "yearPicker", kind: onyx.DatePicker, dayHidden: true, monthHidden: true, onSelect: "yearSelected"},
+			{name: "buttonBracket", kind: onyx.Button, content: "Return to Bracket", ontap: "buttonBracketTapped", showing: false}
 		]},
-		{name: "panels", kind: "enyo.Panels", fit: true, components: [
+		{name: "panels", kind: enyo.Panels, fit: true, components: [
 			{name: "panelBracket", components: [
-				{name: "bracket", kind: "enyo.Scroller", classes: "enyo-fill", components: [
-					{name: "spinner", kind: "onyx.Spinner", classes: "onyx-light"},
+				{name: "bracket", kind: enyo.Scroller, classes: "enyo-fill", components: [
+					{name: "spinner", kind: onyx.Spinner, classes: "onyx-light"},
 					{name: "games", classes: "games", kind: enyo.DataRepeater, ontap: "gameSelected", components: [
 						{classes: "game", components: [
 							{classes: "top", components: [
@@ -48,23 +50,36 @@ enyo.kind({
 		]}
 	],
 	bindings: [
-		{from: ".$.yearPicker.value", to: ".app.yearDate"}
+		{from: ".app.yearDate", to: ".$.yearPicker.value", transform: function (v) {
+			if (v.getFullYear() > this.app.maxYear) v.setFullYear(this.app.maxYear);
+			return v;
+		}},
+		{from: ".app.maxYear", to : ".$.yearPicker.maxYear"},
+		{from: ".app.minYear", to : ".$.yearPicker.minYear"}
 	],
-	startLoading: function () {
+	spinnerStart: function (inSender, inEvent) {
 		this.$.spinner.start();
 	},
-	stopLoading: function () {
+	spinnerStop: function (inSender, inEvent) {
 		this.$.spinner.stop();
 	},
 	buttonBracketTapped: function (inSender, inEvent) {
 		this.$.panels.setIndex(enyo.indexOf(this.$.panelBracket, this.$.panels.getPanels()));
 		this.$.buttonBracket.setShowing(false);
 	},
+	yearSelected: function (inSender, inEvent) {
+		this.app.controllers.router.trigger({location: "#bracket/" + inEvent.value.getFullYear(), change: true});
+		return true;
+	},
 	gameSelected: function (inSender, inEvent) {
 		if (typeof inEvent.index !== 'undefined') {
-			this.$.detail.setSrc(inEvent.model.get("recapUrl"));
-			this.$.panels.setIndex(enyo.indexOf(this.$.panelDetail, this.$.panels.getPanels()));
-			this.$.buttonBracket.setShowing(true);
+			this.showDetail(inEvent.model.get("recapUrl"));
 		}
+		return true;
+	},
+	showDetail: function (inUrl) {
+		this.$.detail.setSrc(inUrl);
+		this.$.panels.setIndex(enyo.indexOf(this.$.panelDetail, this.$.panels.getPanels()));
+		this.$.buttonBracket.setShowing(true);
 	}
 });

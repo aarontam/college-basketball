@@ -3,8 +3,11 @@ enyo.kind({
 	kind: enyo.Application,
 	view: Main,
 	controllers: [
-		{name: "bracket", kind: Bracket}
+		{name: "bracket", kind: Bracket},
+		{name: "router", kind: Router}
 	],
+	minYear: 2011,
+	maxYear: 2012,
 	published: {
 		yearDate: new Date()
 	},
@@ -14,15 +17,11 @@ enyo.kind({
 	// it didn't need to rebuild the entire application UI it could just update any fields
 	// that changed
 	update: function () {
-		var me = this;
-		if (this.view.startLoading) this.view.startLoading();
-		this.controllers.bracket.fetch({success: function() { 
-			if (me.view.stopLoading) {
-				me.view.stopLoading();
-			}
-		}, strategy: "merge", replace: true});
+		enyo.Signals.send("onLoadingStart");
+		this.controllers.bracket.fetch({success: function() { enyo.Signals.send("onLoadingStop") }, strategy: "merge", replace: true});
 	},
 	year: function () {
+		if (this.yearDate.getFullYear() > this.maxYear) this.yearDate.setFullYear(this.maxYear);
 		return this.yearDate.getFullYear();
 	},
 	yearDateChanged: function (inOldValue) {
