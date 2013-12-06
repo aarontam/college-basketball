@@ -11,19 +11,17 @@ enyo.kind({
 	published: {
 		yearDate: new Date()
 	},
-	// in this method all we're doing is calling fetch with the `merge` strategy indicated
-	// of course this app doesn't currently supply an interactive UI button or timer to
-	// automatically update the content...but it could be done and this would make it so
-	// it didn't need to rebuild the entire application UI it could just update any fields
-	// that changed
+	// fetch bracket data
 	update: function () {
 		enyo.Signals.send("onLoadingStart");
 		this.controllers.bracket.fetch({success: function() { enyo.Signals.send("onLoadingStop") }, strategy: "merge", replace: true});
 	},
+	// computed property that returns the year as a string (and ensures the value does not exceed the max year specified)
 	year: function () {
 		if (this.yearDate.getFullYear() > this.maxYear) this.yearDate.setFullYear(this.maxYear);
 		return this.yearDate.getFullYear();
 	},
+	// update our data whenever the year changes
 	yearDateChanged: function (inOldValue) {
 		this.update();
 	},

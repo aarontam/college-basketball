@@ -51,6 +51,8 @@ enyo.kind({
 	],
 	bindings: [
 		{from: ".app.yearDate", to: ".$.yearPicker.value", transform: function (v) {
+			// not ideal, but necessary to ensure that we are not binding to an invalid value
+			// will look for cleaner solution later
 			if (v.getFullYear() > this.app.maxYear) v.setFullYear(this.app.maxYear);
 			return v;
 		}},
@@ -63,6 +65,7 @@ enyo.kind({
 	spinnerStop: function (inSender, inEvent) {
 		this.$.spinner.stop();
 	},
+	// return to bracket view (ostensibly from detail view)
 	buttonBracketTapped: function (inSender, inEvent) {
 		this.$.panels.setIndex(enyo.indexOf(this.$.panelBracket, this.$.panels.getPanels()));
 		this.$.buttonBracket.setShowing(false);
@@ -77,6 +80,7 @@ enyo.kind({
 		}
 		return true;
 	},
+	// broken out as a separate function in the event we want to load the detail view via another action
 	showDetail: function (inUrl) {
 		this.$.detail.setSrc(inUrl);
 		this.$.panels.setIndex(enyo.indexOf(this.$.panelDetail, this.$.panels.getPanels()));

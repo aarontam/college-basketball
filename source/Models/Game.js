@@ -11,6 +11,7 @@ enyo.kind({
 			top,
 			bottom;
 
+		// determine top and bottom team (important for correct seeding)
 		if (data.home.isTop === "T") {
 			top = data.home;
 			bottom = data.away;
