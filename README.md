@@ -4,6 +4,6 @@ __See it in action [here](http://bball.collaborap.com)__
 
 This application is available for learning purposes only. It is designed to show some possible implementation choices using the available framework tools for retrieving and manipulating data objects.
 
-This application is in now way affiliated with any college, university or the [NCAA](http://ncaa.com). It uses a public _JSONP_ API to retrieve college-basketball tournament seedings and results for the given year.
+This application is in no way affiliated with any college, university or the [NCAA](http://ncaa.com). It uses a public _JSONP_ API to retrieve college-basketball tournament seedings and results for the given year.
 
 Author: Aaron Tam ([aarontam](https://github.com/aarontam))
